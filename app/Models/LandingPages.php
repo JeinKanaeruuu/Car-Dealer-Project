@@ -10,4 +10,10 @@ class LandingPages extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    // Accessors to get the full URL for the image
+    public function getImageUrlAttribute()
+    {
+        return asset('storage/' . $this->image_path);
+    }
 }

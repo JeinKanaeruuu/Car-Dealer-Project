@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\TextInput;
 
 class LandingPagesResource extends Resource
 {
@@ -23,10 +25,13 @@ class LandingPagesResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('Image')
+                FileUpload::make('image_path')
+                    ->label('Image')
                     ->required()
-                    ->image()->disk('public'),
-                Forms\Components\TextInput::make('Image Title')
+                    ->image()
+                    ->disk('public'),
+                TextInput::make('image_title')
+                    ->label('Image Title')
                     ->maxLength(255)
                     ->required(),
             ]);
@@ -36,17 +41,11 @@ class LandingPagesResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image_path'),
-                Tables\Columns\TextColumn::make('description')
+                Tables\Columns\ImageColumn::make('image_path')
+                    ->label('Image'),
+                    Tables\Columns\TextColumn::make('image_title')
+                    ->label('Image Title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -55,9 +54,7 @@ class LandingPagesResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 

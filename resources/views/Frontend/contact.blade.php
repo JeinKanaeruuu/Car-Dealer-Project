@@ -2,8 +2,11 @@
 
 @section('content')
 
-  <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{asset('frontend/images/contact.jpg')}}');"
-    data-stellar-background-ratio="0.5">
+  <section class="hero-wrap hero-wrap-2 js-fullheight"  
+    @php
+    $landingPage = \App\Models\LandingPages::where('image_title', 'ContactUs')->first();
+    @endphp
+    style="background-image: url('{{ $landingPage->image_url }}');">
     <div class="overlay"></div>
     <div class="container">
       <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">

@@ -2,7 +2,11 @@
 
 @section('content')
 
-    <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{asset('frontend/images/services.jpg')}}');"
+    <section class="hero-wrap hero-wrap-2 js-fullheight" 
+        @php
+        $landingPage = \App\Models\LandingPages::where('image_title', 'Services')->first();
+        @endphp
+    style="background-image: url('{{ $landingPage->image_url }}');"
     data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
@@ -70,7 +74,12 @@
     </div>
     </section>
 
-    <section class="ftco-section ftco-intro" style="background-image: url({{asset('frontend/images/about.jpg')}});">
+    <section class="ftco-section ftco-intro"             
+        @php
+        $landingPage = \App\Models\LandingPages::where('image_title', 'Driver')->first();
+        @endphp
+    style="background-image: url('{{ $landingPage->image_url }}');">
+
     <div class="overlay"></div>
     <div class="container">
     <div class="row justify-content-end">
