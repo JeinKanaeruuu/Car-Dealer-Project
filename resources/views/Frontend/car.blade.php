@@ -4,7 +4,7 @@
 
     <section class="hero-wrap hero-wrap-2 js-fullheight"         
     @php
-    $landingPage = \App\Models\LandingPages::where('image_title', 'ContactUs')->first();
+    $landingPage = \App\Models\LandingPages::where('image_title', 'Cars')->first();
     @endphp
 
     style="background-image: url('{{ $landingPage->image_url }}');">
@@ -44,7 +44,7 @@
             @endforeach
         </div>
         <div class="row justify-content-center mt-5">
-            <div class=" text-center">
+            <div class="text-center">
                 {{$cars->links()}}
                 </div>
             </div>

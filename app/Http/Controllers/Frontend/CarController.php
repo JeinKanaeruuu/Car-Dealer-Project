@@ -16,7 +16,7 @@ class CarController extends Controller
 
     public function show (Car $car)
     {
-        $related_cars = Car::Get();
+        $related_cars = Car::paginate(3);
 
         return view('frontend.detail', compact('car', 'related_cars'));
     }
