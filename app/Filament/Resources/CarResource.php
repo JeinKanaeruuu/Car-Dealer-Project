@@ -3,22 +3,21 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CarResource\Pages;
-use App\Filament\Resources\CarResource\RelationManagers;
 use App\Models\Car;
+use App\Models\CarImage;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\FileUpload;
 
 class CarResource extends Resource
 {
     protected static ?string $model = Car::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'fas-car';
 
     public static function form(Form $form): Form
     {
@@ -27,8 +26,8 @@ class CarResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255)
-                    ->live(debounce : '1000')
-                    ->afterStateUpdated(function($set, $state) {
+                    ->live(debounce: '1000')
+                    ->afterStateUpdated(function ($set, $state) {
                         $set('slug', Str::slug($state));
                     }),
                 Forms\Components\TextInput::make('slug')
@@ -40,7 +39,16 @@ class CarResource extends Resource
                     ->prefix('$'),
                 Forms\Components\FileUpload::make('thumbnail')
                     ->required()
-                    ->image()->disk('public')
+                    ->image()
+                    ->disk('public')
+                    ->columnSpanFull(),
+                Repeater::make('images')
+                    ->relationship()
+                    ->schema([
+                        FileUpload::make('image_path')
+                            ->disk('public')
+                            ->required(),
+                    ])
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('mil')
                     ->required()

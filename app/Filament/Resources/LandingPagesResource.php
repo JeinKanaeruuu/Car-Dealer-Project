@@ -17,7 +17,7 @@ class LandingPagesResource extends Resource
 {
     protected static ?string $model = LandingPages::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'fas-image';
 
     public static function form(Form $form): Form
     {
