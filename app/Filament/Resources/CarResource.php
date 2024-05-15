@@ -13,6 +13,8 @@ use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\FileUpload;
+use Illuminate\Validation\Rule;
+
 
 class CarResource extends Resource
 {
@@ -28,7 +30,8 @@ class CarResource extends Resource
                     ->maxLength(255)
                     ->live(debounce: '1000')
                     ->afterStateUpdated(function ($set, $state) {
-                        $set('slug', Str::slug($state));
+                        $slug = Str::slug($state);
+                        $set('slug', self::generateUniqueSlug($slug));
                     }),
                 Forms\Components\TextInput::make('slug')
                     ->required()
@@ -66,6 +69,15 @@ class CarResource extends Resource
                     ->required()
                     ->columnSpanFull(),
             ]);
+    }
+
+    private static function generateUniqueSlug($slug, $count = 0)
+    {
+        $newSlug = $count === 0 ? $slug : "{$slug}-{$count}";
+        if (Car::where('slug', $newSlug)->exists()) {
+            return self::generateUniqueSlug($slug, ++$count);
+        }
+        return $newSlug;
     }
 
     public static function table(Table $table): Table
