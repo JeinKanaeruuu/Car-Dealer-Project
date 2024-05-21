@@ -183,7 +183,7 @@
                         <div class="d-flex mb-3">
                             <p class="price ml-auto">${{ $related_car->price }} <span>/day</span></p>
                         </div>
-                        <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a href="{{ route('car.show', $related_car->slug) }}" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                        <p class="d-flex mb-0 d-block"><a href="https://api.whatsapp.com/send/?phone=%2B6281549216635&text=Hello there" class="btn btn-primary py-2 mr-1">Book now</a> <a href="{{ route('car.show', $related_car->slug) }}" class="btn btn-secondary py-2 ml-1">Details</a></p>
                     </div>
                 </div>
             </div>
